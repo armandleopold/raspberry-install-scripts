@@ -5,6 +5,13 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 * http://www.pidramble.com/wiki
 * https://gitlab.com/xavki/raspberry-tricks
 
+# Download and install operating system :
+> from https://www.raspberrypi.org/downloads/raspbian/
+
+1. Download rapsbian lite version.
+2. Donwload Etcher balena : https://www.balena.io/etcher/
+3. Copy raspbian iso onto sdcard with etcher.
+
 # Enable SSH 
 > from https://www.raspberrypi.org/documentation/remote-access/ssh/
 

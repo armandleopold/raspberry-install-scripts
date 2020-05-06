@@ -7,6 +7,7 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 
 # Enable SSH 
 > from https://www.raspberrypi.org/documentation/remote-access/ssh/
+
 Add a file named `ssh` at the root path of the boot partition of the SDCARD before running it
 
 # Increase swap size

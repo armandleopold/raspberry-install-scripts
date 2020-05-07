@@ -55,3 +55,9 @@ dtparam=pwr_led_activelow=off
 
 # Protect : 
 > from https://www.linuxnorth.org/five_minute_firewall/
+
+I am using a physical router/firewall to isolate my raspberry cluster from my local network. I have configured port forwarding from my ISP router to my custom router ip.
+
+> from https://blog.laslabs.com/2013/04/change-webui-port-ubiquiti-edge-router-lite/
+
+Changing default webui port for Edge Router

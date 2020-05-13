@@ -13,6 +13,13 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 2. Donwload Etcher balena : https://www.balena.io/etcher/
 3. Copy raspbian iso onto sdcard with etcher.
 
+# Enable x64 Arm Architecture to use full power of new BROADCOM Arm-v8 CPU
+> from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
+`sudo rpi-update`
+
+If you want to switch to 64-bit kernel add to **config.txt**
+`arm_64bit=1`
+
 # Enable SSH 
 > from https://www.raspberrypi.org/documentation/remote-access/ssh/
 

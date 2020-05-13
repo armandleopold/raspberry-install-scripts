@@ -4,6 +4,7 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 ## Sources : 
 * http://www.pidramble.com/wiki
 * https://gitlab.com/xavki/raspberry-tricks
+* https://thewalkingdevs.io/project_armadillo/
 
 # Download and install operating system :
 > from https://www.raspberrypi.org/downloads/raspbian/

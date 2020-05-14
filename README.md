@@ -25,6 +25,17 @@ If you want to switch to 64-bit kernel add to **config.txt**
 
 Add a file named `ssh` at the root path of the boot partition of the SDCARD before running it
 
+# Connect with SSH keys : 
+> from https://www.linode.com/docs/security/authentication/use-public-key-authentication-with-ssh/
+
+Generate key on the desktop :
+
+`ssh-keygen -b 4096`
+
+Copy the public key on the servers or remote machine :
+
+`ssh-copy-id your_username@192.0.2.0`
+
 # Increase swap size
 > from https://wpitchoune.net/tricks/raspberry_pi3_increase_swap_size.html
 

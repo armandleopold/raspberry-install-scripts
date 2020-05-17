@@ -96,3 +96,21 @@ I am using a physical router/firewall to isolate my raspberry cluster from my lo
 > from https://blog.laslabs.com/2013/04/change-webui-port-ubiquiti-edge-router-lite/
 
 Changing default webui port for Edge Router
+
+# Set Hostname : 
+
+
+# Change default user :
+
+
+# Change password :
+
+
+# Install K3S : 
+> from https://rancher.com/docs/k3s/latest/en/installation/
+> from https://k3s.io/
+
+## Uniqueness : 
+> from https://rancher.com/docs/k3s/latest/en/advanced/#enabling-legacy-iptables-on-raspbian-buster
+
+Enabling-legacy-iptables-on-raspbian-buster

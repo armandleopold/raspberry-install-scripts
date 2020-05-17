@@ -25,6 +25,22 @@ If you want to switch to 64-bit kernel add to **config.txt**
 
 Add a file named `ssh` at the root path of the boot partition of the SDCARD before running it
 
+# Set Static IP from your Router
+
+I personaly use an Ubiquity Edge Router X for routing my internal cluster.
+This router is setup to give static IP for my differents Raspberry Pi :
+
+In a subnet : 192.168.2.0/24
+I have : 
+-	192.168.2.39
+-	192.168.2.40
+-	192.168.2.41
+- 	192.168.2.42
+
+# Set a Bastion as a passthrough for getting to your machines
+
+I use my edge router as a Firewall to monitor in & out bound traffic and setup firewall Rules, i also use it as a bastion to SSH to my cluster. I have disabled port 22 from outside the LAN of the router. It's is impossible from the outside to reach my machines with the ssh port.
+
 # Connect with SSH keys : 
 > from https://www.linode.com/docs/security/authentication/use-public-key-authentication-with-ssh/
 

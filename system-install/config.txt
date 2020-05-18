@@ -1,1 +1,10 @@
-  
+# Set ARM 64 Bit OS support /!\ Works only with Rapbian Buster for Rasppi 3B & 4B /!\
+arm_64bit=1
+
+# Disable the ACT LED.
+dtparam=act_led_trigger=none
+dtparam=act_led_activelow=off
+
+# Disable the PWR LED.
+dtparam=pwr_led_trigger=none
+dtparam=pwr_led_activelow=off

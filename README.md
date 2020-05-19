@@ -3,8 +3,10 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 
 ## Sources : 
 * http://www.pidramble.com/wiki
+* https://blog.alexellis.io/serverless-kubernetes-on-raspberry-pi/
 * https://gitlab.com/xavki/raspberry-tricks
-* https://thewalkingdevs.io/project_armadillo/
+* https://github.com/likamrat/ARMadillo
+* https://github.com/Raspbernetes
 
 # Download and install operating system :
 > from https://www.raspberrypi.org/downloads/raspbian/

@@ -8,58 +8,43 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 * https://github.com/likamrat/ARMadillo
 * https://github.com/Raspbernetes
 
-# Download and install operating system :
+## Summary  :
+
+* [1. Download and install Operating System]()
+
+> For hardware & infrastructure requirements go see my other repo : https://github.com/armandleopold/raspberry-cluster
+
+# 1. Download and install Operating System
 > from https://www.raspberrypi.org/downloads/raspbian/
 
 1. Download rapsbian lite version.
 2. Donwload Etcher balena : https://www.balena.io/etcher/
 3. Copy raspbian iso onto sdcard with etcher.
 
-# Enable x64 Arm Architecture to use full power of new BROADCOM Arm-v8 CPU
-> from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
-`sudo rpi-update`
-
-If you want to switch to 64-bit kernel add to **config.txt**
-`arm_64bit=1`
-
-# Enable SSH 
+# 2. Boot Config
+## Enable SSH 
 > from https://www.raspberrypi.org/documentation/remote-access/ssh/
 
 Add a file named `ssh` at the root path of the boot partition of the SDCARD before running it
 
-# Set Static IP from your Router
+## Enable x64 :
+*Arm Architecture to use full power of new BROADCOM Arm-v8 CPU*
+> from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
 
-I personaly use an Ubiquity Edge Router X for routing my internal cluster.
-This router is setup to give static IP for my differents Raspberry Pi :
+Update Config : 
+```
+sudo rpi-update
+```
+If you want to switch to 64-bit kernel add to **config.txt**
+`arm_64bit=1`
 
-In a subnet : 192.168.2.0/24
-I have : 
--	192.168.2.39
--	192.168.2.40
--	192.168.2.41
-- 	192.168.2.42
-
-# Set a Bastion as a passthrough for getting to your machines
-
-I use my edge router as a Firewall to monitor in & out bound traffic and setup firewall Rules, i also use it as a bastion to SSH to my cluster. I have disabled port 22 from outside the LAN of the router. It's is impossible from the outside to reach my machines with the ssh port.
-
-# Connect with SSH keys : 
-> from https://www.linode.com/docs/security/authentication/use-public-key-authentication-with-ssh/
-
-Generate key on the desktop :
-
-`ssh-keygen -b 4096`
-
-Copy the public key on the servers or remote machine :
-
-`ssh-copy-id your_username@192.0.2.0`
-
-# Increase swap size
+## Increase swap size
 > from https://wpitchoune.net/tricks/raspberry_pi3_increase_swap_size.html
 
 * STOP THE SWAP
 
 `sudo dphys-swapfile swapoff`
+
 * MODIFY THE SIZE OF THE SWAP
 
 As root, edit the file `/etc/dphys-swapfile` and modify the variable **CONF_SWAPSIZE** :
@@ -70,7 +55,7 @@ and run `sudo dphys-swapfile setup` which will create and initialize the file.
 * START THE SWAP
 `sudo dphys-swapfile swapon`
 
-# Optimize Power Consumption
+## Optimize Power Consumption
 > from https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-conserve-energy
 
 
@@ -90,7 +75,45 @@ dtparam=pwr_led_activelow=off
 * Minimize Accessories	50+ mA	Every active device you plug into the Raspberry Pi will consume some energy; even a mouse or a simple keyboard will eat up 50-100 mA! If you don't need it, don't plug it in.
 * Be Discerning with Software	100+ mA	If you're running five or six daemons on your Raspberry Pi, those daemons can waste energy as they cause the processor (or other subsystems) to wake and use extra power frequently. Unless you absolutely need something running, don't install it. Also consider using more power-efficient applications that don't require a large stack of software (e.g. LAMP/LEMP or LEMR) to run.
 
-# Protect : 
+## Set Timezone : 
+
+```
+sudo timedatectl set-timezone Europe/Paris
+```
+
+
+# 3. Net Config
+## Set Static IP from your Router
+
+I personaly use an Ubiquity Edge Router X for routing my internal cluster.
+This router is setup to give static IP for my differents Raspberry Pi :
+
+In a subnet : 192.168.2.0/24
+I have : 
+-	192.168.2.39
+-	192.168.2.40
+-	192.168.2.41
+- 	192.168.2.42
+
+## Set a Bastion as a passthrough for getting to your machines
+
+I use my edge router as a Firewall to monitor in & out bound traffic and setup firewall Rules, i also use it as a bastion to SSH to my cluster. I have disabled port 22 from outside the LAN of the router. 
+
+It's is impossible from the outside to reach my machines with the ssh port.
+
+## Connect with SSH keys : 
+> from https://www.linode.com/docs/security/authentication/use-public-key-authentication-with-ssh/
+
+Generate key on the desktop :
+
+`ssh-keygen -b 4096`
+
+Copy the public key on the servers or remote machine :
+
+`ssh-copy-id your_username@192.0.2.0`
+
+
+## Protect : 
 > from https://www.linuxnorth.org/five_minute_firewall/
 
 I am using a physical router/firewall to isolate my raspberry cluster from my local network. I have configured port forwarding from my ISP router to my custom router ip.
@@ -99,16 +122,16 @@ I am using a physical router/firewall to isolate my raspberry cluster from my lo
 
 Changing default webui port for Edge Router
 
-# Set Hostname : 
+## Set Hostname : 
 
 
-# Change default user :
+## Change default user :
 
 
-# Change password :
+## Change password :
 
 
-# Install K3S : 
+# 4. Install K3S
 > from https://rancher.com/docs/k3s/latest/en/installation/
 > from https://k3s.io/
 
@@ -116,3 +139,6 @@ Changing default webui port for Edge Router
 > from https://rancher.com/docs/k3s/latest/en/advanced/#enabling-legacy-iptables-on-raspbian-buster
 
 Enabling-legacy-iptables-on-raspbian-buster
+
+
+# 5. Install Rancher

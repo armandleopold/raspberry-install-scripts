@@ -280,7 +280,11 @@ Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed r
 
 ```
 helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+kubectl create namespace cattle-system
+helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher.mydomain.com --set tls=external
 ```
+
+Wait a little bit, then go to : https://rancher.mydomain.com/
 
 ## Sources : 
 * http://www.pidramble.com/wiki

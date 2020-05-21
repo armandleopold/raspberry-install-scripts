@@ -145,7 +145,7 @@ sudo reboot
 -	192.168.2.39 -> pi1
 -	192.168.2.40 -> pi2
 -	192.168.2.41 -> pi3
-- 	192.168.2.42 -> pi4
+- 192.168.2.42 -> pi4
 
 ## Change password :
 
@@ -207,23 +207,80 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 sudo chown -R pi:pi /etc/rancher/
 ```
 
-## Edit Traefik config : 
+## Generate traefik dashboard user password :
 
-> from https://github.com/rancher/k3s/issues/1332
+> from https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-16-04
 
-Edit traefik manifest at `/var/lib/rancher/k3s/server/manifests/traefik.yaml`
-And add the following lines at the end :
-```yaml
-    dashboard:
-      enabled: true
-      domain: "mydomain.com"
+We’ll use the htpasswd utility to create this encrypted password. First, install the utility, which is included in the apache2-utils package:
+
+```bash
+sudo apt-get install apache2-utils
+```
+Then generate the password with htpasswd. Substitute `secure_password` with the password you’d like to use for the Traefik admin user:
+
+```bash
+htpasswd -nb admin secure_password
+```
+The output from the program will look like this:
+
+```
+admin: xxxxxxxxxxxxxx
 ```
 
-Then go to : `https://mydomain.com:<443 ingress traefik port/dashboard/` to check if you succeed resolving the host, get correctly routed & get a response from a container on your cluster. If so, then you have a fully functionnal cluster !
+## Edit traefik manifest 
+
+> from https://github.com/helm/charts/tree/master/stable/traefik#configuration
+
+At `/var/lib/rancher/k3s/server/manifests/traefik.yaml`
+And add the following lines at the end :
+```yaml
+    serviceType: NodePort
+    service:
+      nodePorts:
+        http: xxxxx # custom nodeport
+        https: xxxxx # custom nodeport
+    dashboard:
+      enabled: true
+      domain: "traefik.mydomain.com"
+      auth:
+        basic:
+          admin: xxxxxxxxxxxxxx # the admin htpasswd you just generated
+    acme:
+      enabled: true
+      logging: true
+      staging: false
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      email: xxxxxxxxxxxxxx  # your email
+      challengeType: "dns-01"
+      dnsProvider:
+        name: gcloud
+        gcloud:
+          GCE_PROJECT: "xxxxxxxxxxxxxx" # your Google Cloud Project
+          GCE_SERVICE_ACCOUNT_FILE: "/secrets/gcloud-credentials.json"
+      domains:
+        enabled: true
+        domainsList:
+          - main: "*.mydomain.com"
+          - sans:
+            - "mydomain.com"
+    secretFiles:
+      gcloud-credentials.json: '{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}'
+```
+
+Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed resolving the host, get correctly routed & get a response from a container on your cluster. If so, then you have a fully functionnal cluster !
+
+> Nice tips for recreating a kube job :
+> You can simulate a rerun by replacing the job with itself:
+>
+> `kubectl get job "your-job" -o json | kubectl replace --force -f -`
 
 # 5. Install Rancher
 
+> from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/#1-install-the-required-cli-tools
 
+```
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+```
 
 ## Sources : 
 * http://www.pidramble.com/wiki

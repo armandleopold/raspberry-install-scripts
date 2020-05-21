@@ -57,7 +57,7 @@ gpu_mem=16
 > from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
 
 Update Config : 
-```
+```bash
 sudo rpi-update
 ```
 If you want to switch to 64-bit kernel add to **config.txt**
@@ -82,7 +82,7 @@ and run `sudo dphys-swapfile setup` which will create and initialize the file.
 
 ## Set Timezone : 
 
-```
+```bash
 sudo timedatectl set-timezone Europe/Paris
 ```
 
@@ -136,7 +136,7 @@ Changing default webui port for Edge Router
 ## Set Hostname : 
 
 Edit the file ``/etc/host``
-```
+```bash
 sudo nano /etc/hostname
 sudo nano /etc/hosts
 sudo reboot
@@ -153,12 +153,73 @@ sudo reboot
 
 Change the password for the **pi** user
 
-# 4. Install K3S
+# 4. Install Cluster Orchestrator environment
+
+
+## Enabling legacy iptables on Raspbian Buster
+
+Raspbian Buster defaults to using nftables instead of iptables. K3S networking features require iptables and do not work with nftables. Follow the steps below to switch configure Buster to use legacy iptables:
+
+```
+sudo iptables -F
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+sudo reboot
+```
+
+## K3S Install
 > from https://rancher.com/docs/k3s/latest/en/installation/
 > from https://k3s.io/
 
-Do this ! => 
-> from https://blog.alexellis.io/test-drive-k3s-on-raspberry-pi/
+SSH to your master node pi and run :
+Server install command:
+```bash
+curl -sfL https://get.k3s.io | K3S_TOKEN=abc123 sh -s - server --cluster-init
+```
+
+Then SSH to you worker nodes pi and run :
+Agent install command:
+```bash
+curl -sfL https://get.k3s.io | K3S_TOKEN=abc123 K3S_URL=https://server:6443/ sh -s -
+```
+
+## Helm Install
+
+SSH to your master node pi and run :
+
+> from https://helm.sh/docs/intro/install/#helm
+```bash
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+
+Export k3s kubeconfig file as ENV var to override helm default get config path :
+> from https://helm.sh/docs/helm/helm/
+
+```bash
+echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
+```
+
+## Set user rights on master node : 
+
+```bash
+sudo chown -R pi:pi /etc/rancher/
+```
+
+## Edit Traefik config : 
+
+> from https://github.com/rancher/k3s/issues/1332
+
+Edit traefik manifest at `/var/lib/rancher/k3s/server/manifests/traefik.yaml`
+And add the following lines at the end :
+```yaml
+    dashboard:
+      enabled: true
+      domain: "mydomain.com"
+```
+
+Then go to : `https://mydomain.com:<443 ingress traefik port/dashboard/` to check if you succeed resolving the host, get correctly routed & get a response from a container on your cluster. If so, then you have a fully functionnal cluster !
 
 # 5. Install Rancher
 

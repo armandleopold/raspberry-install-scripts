@@ -52,6 +52,15 @@ In **config.txt** add
 gpu_mem=16
 ```
 
+## (Optional depends on your cooling) Overclocking CPU :
+
+In **config.txt** add 
+```
+# Set CPU Voltage & Frequency
+over_voltage=6
+arm_freq=2000
+```
+
 ## Enable 64bit kernel :
 *Arm Architecture to use full power of new BROADCOM Arm-v8 CPU*
 > from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
@@ -62,6 +71,7 @@ sudo rpi-update
 ```
 If you want to switch to 64-bit kernel add to **config.txt**
 `arm_64bit=1`
+
 
 ## Increase swap size
 > from https://wpitchoune.net/tricks/raspberry_pi3_increase_swap_size.html

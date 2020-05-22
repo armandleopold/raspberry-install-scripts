@@ -279,12 +279,30 @@ Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed r
 > from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/#1-install-the-required-cli-tools
 
 ```
-helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
 kubectl create namespace cattle-system
 helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher.mydomain.com --set tls=external
 ```
 
 Wait a little bit, then go to : https://rancher.mydomain.com/
+
+# 6. Install Prometheus 
+
+> from https://github.com/helm/charts/tree/master/stable/prometheus
+
+```
+helm install prometheus stable/prometheus -f prometheus.yaml --namespace prometheus
+```
+
+# 7. Install Grafana
+
+> from https://github.com/helm/charts/tree/master/stable/grafana
+
+```
+helm install grafana stable/grafana -f grafana.yaml --namespace prometheus
+```
+
+Settings : https://grafana.com/docs/grafana/latest/installation/configuration/#admin-user
 
 ## Sources : 
 * http://www.pidramble.com/wiki

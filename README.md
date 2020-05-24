@@ -52,9 +52,9 @@ In **config.txt** add
 gpu_mem=16
 ```
 
-## (Optional depends on your cooling) Overclocking CPU :
+## Overclocking CPU (Optional depends on your cooling) :
 
-In **config.txt** add 
+In **config.txt** add  to overclock the CPU to 2.0 GHz
 ```
 # Set CPU Voltage & Frequency
 over_voltage=6
@@ -73,7 +73,7 @@ If you want to switch to 64-bit kernel add to **config.txt**
 `arm_64bit=1`
 
 
-## Increase swap size
+## Increase swap size [1st Method] (FOR HDD/SSD SWAPING)
 > from https://wpitchoune.net/tricks/raspberry_pi3_increase_swap_size.html
 
 * STOP THE SWAP
@@ -89,6 +89,39 @@ and run `sudo dphys-swapfile setup` which will create and initialize the file.
 
 * START THE SWAP
 `sudo dphys-swapfile swapon`
+
+## Increase swap size [2nd Method] (FOR ZRAM SWAPING)
+
+> from https://www.reddit.com/r/pihole/comments/ek67lr/psa_zram_in_buster_literally_download_more_ram/
+
+* STOP THE SWAP
+
+`sudo dphys-swapfile swapoff`
+
+* Install ZRAM 
+
+`sudo apt-get install -y zram-tools`
+
+* Edit config file
+
+By default this package will create a **256MB swap drive** : Edit `/etc/default/zramswap`
+
+`sudo nano /etc/default/zramswap`
+
+Uncomment line : **PERCENTAGE** and set to 
+
+`PERCENTAGE=50`
+
+```
+sudo systemctl enable zramswap
+sudo systemctl restart zramswap
+```
+
+**REBOOT**
+
+* Check : 
+
+`grep zram /proc/swaps`
 
 ## Set Timezone : 
 
@@ -286,7 +319,7 @@ Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed r
 
 # 5. Install Rancher
 
-> from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/#1-install-the-required-cli-tools
+> from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/
 
 ```
 helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
@@ -294,7 +327,20 @@ kubectl create namespace cattle-system
 helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher.mydomain.com --set tls=external
 ```
 
+or
+
+```
+helm install rancher rancher-stable/rancher -f rancher.yaml --namespace cattle-system
+```
+
 Wait a little bit, then go to : https://rancher.mydomain.com/
+
+> ## Remove rancher :
+> `helm uninstall rancher -n cattle-system`
+>
+> This is a known issue with removing an imported cluster (and in the process of being fixed) but you can remove it by running `kubectl edit namespace cattle-system` and remove the finalizer called `controller.cattle.io/namespace-auth` then save. Kubernetes won't delete an object that has a finalizer on it.
+>
+> `kubectl delete namespace cattle-system`
 
 # 6. Install Prometheus 
 

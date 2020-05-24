@@ -88,6 +88,7 @@ As root, edit the file `/etc/dphys-swapfile` and modify the variable **CONF_SWAP
 and run `sudo dphys-swapfile setup` which will create and initialize the file.
 
 * START THE SWAP
+
 `sudo dphys-swapfile swapon`
 
 ## Increase swap size [2nd Method] (FOR ZRAM SWAPING)
@@ -213,17 +214,28 @@ sudo reboot
 ## K3S Install
 > from https://rancher.com/docs/k3s/latest/en/installation/
 > from https://k3s.io/
+> from https://blog.alexellis.io/test-drive-k3s-on-raspberry-pi/
 
 SSH to your master node pi and run :
 Server install command:
+
 ```bash
-curl -sfL https://get.k3s.io | K3S_TOKEN=abc123 sh -s - server --cluster-init
+curl -sfL https://get.k3s.io | sh -s - server --cluster-init 
+sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-curl -sfL https://get.k3s.io | K3S_TOKEN=abc123 K3S_URL=https://server:6443/ sh -s -
+export K3S_TOKEN=""
+export K3S_URL="https://192.168.2.39:6443"
+curl -sfL https://get.k3s.io | sh -s - agent 
+```
+
+Check nodes : 
+
+```bash
+sudo kubectl get node -o wide
 ```
 
 ## Helm Install
@@ -257,7 +269,7 @@ sudo chown -R pi:pi /etc/rancher/
 We’ll use the htpasswd utility to create this encrypted password. First, install the utility, which is included in the apache2-utils package:
 
 ```bash
-sudo apt-get install apache2-utils
+sudo apt-get install -y apache2-utils
 ```
 Then generate the password with htpasswd. Substitute `secure_password` with the password you’d like to use for the Traefik admin user:
 
@@ -330,6 +342,7 @@ helm install rancher rancher-stable/rancher --namespace cattle-system --set host
 or
 
 ```
+kubectl create namespace cattle-system
 helm install rancher rancher-stable/rancher -f rancher.yaml --namespace cattle-system
 ```
 
@@ -338,7 +351,9 @@ Wait a little bit, then go to : https://rancher.mydomain.com/
 > ## Remove rancher :
 > `helm uninstall rancher -n cattle-system`
 >
-> This is a known issue with removing an imported cluster (and in the process of being fixed) but you can remove it by running `kubectl edit namespace cattle-system` and remove the finalizer called `controller.cattle.io/namespace-auth` then save. Kubernetes won't delete an object that has a finalizer on it.
+> This is a known issue with removing an imported cluster (and in the process of being fixed) but you can remove it by running 
+`kubectl edit namespace cattle-system` 
+and remove the finalizer called `controller.cattle.io/namespace-auth` then save. Kubernetes won't delete an object that has a finalizer on it.
 >
 > `kubectl delete namespace cattle-system`
 
@@ -347,6 +362,7 @@ Wait a little bit, then go to : https://rancher.mydomain.com/
 > from https://github.com/helm/charts/tree/master/stable/prometheus
 
 ```
+kubectl create namespace prometheus
 helm install prometheus stable/prometheus -f prometheus.yaml --namespace prometheus
 ```
 
@@ -359,6 +375,16 @@ helm install grafana stable/grafana -f grafana.yaml --namespace prometheus
 ```
 
 Settings : https://grafana.com/docs/grafana/latest/installation/configuration/#admin-user
+
+# 8. Install Gitlab Runners
+
+> from https://docs.gitlab.com/runner/install/kubernetes.html
+
+```
+helm repo add gitlab https://charts.gitlab.io
+kubectl create namespace gitlab
+helm install --namespace gitlab gitlab-runner -f gitlab-runner.yaml gitlab/gitlab-runner
+```
 
 ## Sources : 
 * http://www.pidramble.com/wiki

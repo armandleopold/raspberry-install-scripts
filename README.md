@@ -232,7 +232,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN="K1081d1e8ef941e588eb5bbde7d22217d7b285a4ff6b32d802af387b6d944a6efce::server:22ddcd47c77687273b018bf3790b7569"
+export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
 export INSTALL_K3S_EXEC="agent"
 curl -sfL https://get.k3s.io | sh -s -
@@ -279,6 +279,7 @@ sudo chown -R pi:pi /etc/rancher/
 # Install Traefik :
 ```
 kubectl create namespace traefik
+
 helm install traefik stable/traefik -f traefik.yaml --namespace traefik
 ```
 
@@ -406,6 +407,15 @@ helm repo add gitlab https://charts.gitlab.io
 helm repo update
 kubectl create namespace gitlab
 helm install --namespace gitlab gitlab-runner -f gitlab-runner.yaml gitlab/gitlab-runner
+```
+
+# 9. Install Longhorn (Waiting for ARM64 Support)
+
+> from https://rancher.com/docs/k3s/latest/en/storage/
+
+```
+kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/master/examples/storageclass.yaml
 ```
 
 ## Sources : 

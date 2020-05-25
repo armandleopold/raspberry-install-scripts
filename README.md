@@ -224,16 +224,18 @@ SSH to your master node pi and run :
 Server install command:
 
 ```bash
-curl -sfL https://get.k3s.io | sh -s - server --cluster-init 
+export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik"
+curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
 
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN="K1008d53e038256cdcb0e6817d9fe767a96aafc8913d41473f5d203808d2c94ae00::server:9707354cca19f1eaf1fc2d1a3262bedd"
+export K3S_TOKEN="K1081d1e8ef941e588eb5bbde7d22217d7b285a4ff6b32d802af387b6d944a6efce::server:22ddcd47c77687273b018bf3790b7569"
 export K3S_URL="https://192.168.2.39:6443"
-curl -sfL https://get.k3s.io | sh -s - agent 
+export INSTALL_K3S_EXEC="agent"
+curl -sfL https://get.k3s.io | sh -s -
 ```
 
 Check nodes : 
@@ -241,6 +243,10 @@ Check nodes :
 ```bash
 sudo kubectl get node -o wide
 ```
+
+### Restart k3s
+
+`sudo systemctl restart k3s`
 
 ## Helm Install
 
@@ -267,6 +273,13 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 
 ```bash
 sudo chown -R pi:pi /etc/rancher/
+```
+
+
+# Install Traefik :
+```
+kubectl create namespace traefik
+helm install traefik stable/traefik -f traefik.yaml --namespace traefik
 ```
 
 ## Generate traefik dashboard user password :

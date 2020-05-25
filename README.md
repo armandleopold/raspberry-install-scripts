@@ -149,7 +149,7 @@ I have :
 -	192.168.2.39
 -	192.168.2.40
 -	192.168.2.41
-- 	192.168.2.42
+- 192.168.2.42
 
 ## Set a Bastion as a passthrough for getting to your machines
 
@@ -211,6 +211,10 @@ sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 sudo reboot
 ```
 
+## (Bonus) External storage configuration :
+
+> from https://www.raspberrypi.org/documentation/configuration/external-storage.md
+
 ## K3S Install
 > from https://rancher.com/docs/k3s/latest/en/installation/
 > from https://k3s.io/
@@ -227,7 +231,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN=""
+export K3S_TOKEN="K1008d53e038256cdcb0e6817d9fe767a96aafc8913d41473f5d203808d2c94ae00::server:9707354cca19f1eaf1fc2d1a3262bedd"
 export K3S_URL="https://192.168.2.39:6443"
 curl -sfL https://get.k3s.io | sh -s - agent 
 ```
@@ -247,6 +251,9 @@ SSH to your master node pi and run :
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
+
+helm repo add stable https://kubernetes-charts.storage.googleapis.com
+helm repo update
 ```
 
 Export k3s kubeconfig file as ENV var to override helm default get config path :
@@ -334,7 +341,8 @@ Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed r
 > from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/
 
 ```
-helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm repo update
 kubectl create namespace cattle-system
 helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher.mydomain.com --set tls=external
 ```
@@ -382,6 +390,7 @@ Settings : https://grafana.com/docs/grafana/latest/installation/configuration/#a
 
 ```
 helm repo add gitlab https://charts.gitlab.io
+helm repo update
 kubectl create namespace gitlab
 helm install --namespace gitlab gitlab-runner -f gitlab-runner.yaml gitlab/gitlab-runner
 ```

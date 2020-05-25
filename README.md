@@ -224,7 +224,7 @@ SSH to your master node pi and run :
 Server install command:
 
 ```bash
-export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik"
+export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server"
 curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
@@ -232,8 +232,8 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN=""
-export K3S_URL="https://192.168.2.39:6443"
+export K3S_TOKEN="K10c849c8167d47c8c174c1e42ad038ae06f2510cc7e77884308e4e3bb6c663f3d6::server:3e5e927f029c27d1cf12cc6522c9590f"
+export K3S_URL="https://192.168.2.41:6443"
 export INSTALL_K3S_EXEC="agent"
 curl -sfL https://get.k3s.io | sh -s -
 ```
@@ -275,11 +275,18 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 sudo chown -R pi:pi /etc/rancher/
 ```
 
+# Install Local-path-provisioner : 
+
+```
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+kubectl get storageclass
+```
 
 # Install Traefik :
 ```
 kubectl create namespace traefik
-
 helm install traefik stable/traefik -f traefik.yaml --namespace traefik
 ```
 
@@ -355,17 +362,10 @@ Then go to : `https://traefik.mydomain.com/dashboard/` to check if you succeed r
 > from https://rancher.com/docs/rancher/v2.x/en/installation/k8s-install/helm-rancher/
 
 ```
-helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
 helm repo update
 kubectl create namespace cattle-system
-helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher.mydomain.com --set tls=external
-```
-
-or
-
-```
-kubectl create namespace cattle-system
-helm install rancher rancher-stable/rancher -f rancher.yaml --namespace cattle-system
+helm install rancher rancher-latest/rancher -f rancher.yaml --namespace cattle-system
 ```
 
 Wait a little bit, then go to : https://rancher.mydomain.com/

@@ -278,7 +278,7 @@ sudo chown -R pi:pi /etc/rancher/
 # Install Local-path-provisioner (OpenEBS) : 
 
 ```
-sudo cp openebs-operator-arm-dev.yaml /var/lib/rancher/server/manifests/
+sudo cp openebs-operator-arm-dev.yaml /var/lib/rancher/k3s/server/manifests/
 
 kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 kubectl get storageclass

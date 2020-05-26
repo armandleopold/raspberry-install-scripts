@@ -275,12 +275,12 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 sudo chown -R pi:pi /etc/rancher/
 ```
 
-# Install Local-path-provisioner : 
+# Install Local-path-provisioner (OpenEBS) : 
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+sudo cp openebs-operator-arm-dev.yaml /var/lib/rancher/server/manifests/
 
-kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 kubectl get storageclass
 ```
 
@@ -407,15 +407,6 @@ helm repo add gitlab https://charts.gitlab.io
 helm repo update
 kubectl create namespace gitlab
 helm install --namespace gitlab gitlab-runner -f gitlab-runner.yaml gitlab/gitlab-runner
-```
-
-# 9. Install Longhorn (Waiting for ARM64 Support)
-
-> from https://rancher.com/docs/k3s/latest/en/storage/
-
-```
-kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
-kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/master/examples/storageclass.yaml
 ```
 
 ## Sources : 

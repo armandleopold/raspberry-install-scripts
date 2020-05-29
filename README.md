@@ -309,7 +309,7 @@ The output from the program will look like this:
 ```
 admin: xxxxxxxxxxxxxx
 ```
-
+  
 ## Edit traefik manifest 
 
 > from https://github.com/helm/charts/tree/master/stable/traefik#configuration

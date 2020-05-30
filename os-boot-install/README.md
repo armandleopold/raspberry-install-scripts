@@ -12,6 +12,16 @@
 
 Add a file named `ssh` at the root path of the boot partition of the SDCARD before running it
 
+## Enable 64bit kernel :
+*Arm Architecture to use full power of new BROADCOM Arm-v8 CPU*
+> from https://www.raspberrypi.org/forums/viewtopic.php?t=250730
+
+Update Config : 
+```bash
+sudo rpi-update
+```
+If you want to switch to 64-bit kernel add to **config.txt**
+`arm_64bit=1`
 
 ## Optimize Power Consumption
 > from https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-conserve-energy
@@ -102,12 +112,6 @@ sudo systemctl restart zramswap
 
 `grep zram /proc/swaps`
 
-## Update Kernel :
-
-```
-sudo rpi-update
-```
-
 ## Set Timezone : 
 
 ```bash
@@ -121,6 +125,13 @@ We need to enable container features in the kernel, edit ``/boot/cmdline.txt`` a
 ```
  cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
 ```
+
+## Update Kernel :
+
+```
+sudo rpi-update
+```
+
 
 # 3. Net Config
 ## Set Static IP from your Router
@@ -180,3 +191,10 @@ sudo reboot
 > from https://www.cyberciti.biz/faq/linux-set-change-password-how-to/
 
 Change the password for the **pi** user
+
+`passwd`
+
+
+## (Bonus) External storage configuration :
+
+> from https://www.raspberrypi.org/documentation/configuration/external-storage.md

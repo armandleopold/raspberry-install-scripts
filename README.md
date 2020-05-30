@@ -27,7 +27,6 @@ Add a file named `ssh` at the root path of the boot partition of the SDCARD befo
 ## Optimize Power Consumption
 > from https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-conserve-energy
 
-
 * Disable HDMI	25mA	If you're running a headless Raspberry Pi, there's no need to power the display circuitry, and you can save a little power by running /usr/bin/tvservice -o (-p to re-enable). Add the line to /etc/rc.local to disable HDMI on boot.
 * Disable LEDs	5mA per LED	If you don't care to waste 5+ mA for each LED on your Raspberry Pi, you can disable the ACT LED on the Pi Zero.
 > from https://www.jeffgeerling.com/blogs/jeff-geerling/controlling-pwr-act-leds-raspberry-pi
@@ -117,6 +116,11 @@ Uncomment line : **PERCENTAGE** and set to
 sudo systemctl enable zramswap
 sudo systemctl restart zramswap
 ```
+# Update Kernel :
+
+```
+sudo rpi-update
+```
 
 **REBOOT**
 
@@ -198,7 +202,6 @@ sudo reboot
 Change the password for the **pi** user
 
 # 4. Install Cluster Orchestrator environment
-
 
 ## Enabling legacy iptables on Raspbian Buster
 

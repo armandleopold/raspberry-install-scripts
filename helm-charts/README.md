@@ -25,6 +25,13 @@ kubectl create namespace traefik
 helm install traefik stable/traefik -f traefik.yaml --namespace traefik
 ```
 
+## Edit loadbalancer Nodeport :
+
+Edit the port mapping to 443 => 32443 & 80 => 32080
+```
+kubectl edit service/traefik -n traefik
+```
+
 ## Generate traefik dashboard user password :
 
 > from https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-16-04

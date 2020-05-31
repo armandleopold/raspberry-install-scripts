@@ -22,7 +22,7 @@ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 # Install Traefik :
 ```
 kubectl create namespace traefik
-helm install traefik stable/traefik -f traefik.yaml --namespace traefik
+helm install traefik stable/traefik -f traefik.yaml --namespace kube-system
 ```
 
 ## Generate traefik dashboard user password :

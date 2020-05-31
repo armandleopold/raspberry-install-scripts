@@ -59,7 +59,15 @@ over_voltage=6
 arm_freq=2000
 ```
 
-## Increase swap size :
+## Remove swap :
+
+```
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo update-rc.d dphys-swapfile remove
+```
+
+## Increase swap size (not recommended for k3s) :
 
 ### [1st Method] (FOR HDD/SSD SWAPING)
 > from https://wpitchoune.net/tricks/raspberry_pi3_increase_swap_size.html

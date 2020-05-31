@@ -20,7 +20,7 @@ SSH to your master node pi and run :
 Server install command:
 
 ```bash
-export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=servicelb --disable=metrics-server --tls-san=192.168.2.39"
+export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server --disable=servicelb --flannel-backend=ipsec --datastore-endpoint=etcd"
 curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
@@ -28,7 +28,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN="K1013c9306a3e4beb14807a289b4a0dc2a60acc76e2d3a72fdd87697bcea31537f2::server:946aaba5eba13a9965954d1e79cd7e95"
+export K3S_TOKEN="K1062a533fdc4c61c890ea2bacb69a1bd98f1940660ada42cb8bfe1f49dfbc0531b::server:946aaba5eba13a9965954d1e79cd7e95"
 export K3S_URL="https://192.168.2.39:6443"
 export INSTALL_K3S_EXEC="agent"
 curl -sfL https://get.k3s.io | sh -s -
@@ -44,7 +44,13 @@ sudo kubectl get node -o wide
 
 `sudo systemctl restart k3s`
 
-## Set user rights on master node : 
+### Prioritize IO disk for K3S process
+
+```bash
+sudo ionice -c2 -n0 -p `pgrep k3s`
+```
+
+<!-- ## Set user rights on master node : 
 
 ```bash
 sudo chown -R pi:pi /etc/rancher/
@@ -65,15 +71,16 @@ sudo nano k3s.yaml
 Add secret to k3s :
 
 ```bash
-kubectl create namespace openebs
+sudo kubectl create namespace openebs
 sudo kubectl create secret generic k3screds --from-file=k3s.yaml -n openebs
 ```
+ -->
 
 # Install Local-path-provisioner (OpenEBS) : 
 
 ```
 sudo cp openebs-operator-arm-dev.yaml /var/lib/rancher/k3s/server/manifests/
 
-kubectl patch storageclass openebs-jiva-default -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-kubectl get storageclass
+sudo kubectl patch storageclass openebs-jiva-default -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+sudo kubectl get storageclass
 ```

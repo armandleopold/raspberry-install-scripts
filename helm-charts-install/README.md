@@ -147,7 +147,8 @@ Settings : https://grafana.com/docs/grafana/latest/installation/configuration/#a
 ```
 helm repo add gitlab https://charts.gitlab.io
 helm repo update
-kubectl create namespace gitlab
-helm install --namespace gitlab gitlab-runner-helm -f gitlab-runner-helm.yaml gitlab/gitlab-runner
-helm install --namespace gitlab gitlab-runner-docker -f gitlab-runner-docker.yaml gitlab/gitlab-runner
+kubectl create namespace helm
+kubectl create namespace docker
+helm install --namespace helm gitlab-runner-helm -f gitlab-runner-helm.yaml gitlab/gitlab-runner
+helm install --namespace docker gitlab-runner-docker -f gitlab-runner-docker.yaml gitlab/gitlab-runner
 ```

@@ -28,7 +28,7 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
-export K3S_TOKEN="K10570d04e74c9c99d8e09b6adb2e4f6418cb337eaef44958c14692b85029ca2d7d::server:0a2d8a3bcac8b2493feb4a7884cd4150"
+export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
 export INSTALL_K3S_EXEC="agent"
 curl -sfL https://get.k3s.io | sh -s -

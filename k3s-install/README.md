@@ -20,7 +20,7 @@ SSH to your master node pi and run :
 Server install command:
 
 ```bash
-export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server --datastore-endpoint=etcd"
+export INSTALL_K3S_EXEC="server --cluster-init --docker --disable=traefik --disable=local-storage --disable=metrics-server --datastore-endpoint=etcd"
 curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
@@ -30,7 +30,7 @@ Agent install command:
 ```bash
 export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
-export INSTALL_K3S_EXEC="agent"
+export INSTALL_K3S_EXEC="agent --docker"
 curl -sfL https://get.k3s.io | sh -s -
 ```
 

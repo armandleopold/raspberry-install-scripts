@@ -112,6 +112,8 @@ helm install rancher rancher-latest/rancher -f rancher.yaml --namespace cattle-s
 
 Wait a little bit, then go to : https://rancher.mydomain.com/
 
+Edit deployements to `rancher/rancher-agent:v2.4.4-linux-arm64`
+
 > ## Remove rancher :
 > `helm uninstall rancher -n cattle-system`
 >

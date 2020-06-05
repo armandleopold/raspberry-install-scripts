@@ -30,7 +30,7 @@ Agent install command:
 ```bash
 export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
-export INSTALL_K3S_EXEC="agent --docker"
+export INSTALL_K3S_EXEC="agent"
 curl -sfL https://get.k3s.io | sh -s -
 ```
 

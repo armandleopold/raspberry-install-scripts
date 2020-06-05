@@ -5,11 +5,10 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 
 # Summary :
 
-* [1. Download and install Operating System](#1-download-and-install-operating-system)
-* [2. Boot Config](#2-boot-config)
-* [3. Net Config](#3-net-config)
-* [4. Install K3S](#4-install-k3s)
-* [5. Install Rancher](#5-install-rancher)
+* [1. OS Install](os-boot-install/README.md)
+* [2. Install K3S](k3s-install/README.md)
+* [3. Helm Chart Install](helm-charts-install/README.md)
+* [4. CI/CD Install](ci-cd-install/README.md)
 
 ## Sources : 
 * http://www.pidramble.com/wiki
@@ -19,6 +18,8 @@ Scripts and configuration tunning i use to setup my raspberry cluster.
 * https://github.com/Raspbernetes
 
 > from https://dev.to/rohansawant/installing-docker-and-docker-compose-on-the-raspberry-pi-in-5-simple-steps-3mgl
+
+## [Bonus] Add docker :
 
 Steps
 1. Install Docker
@@ -45,6 +46,8 @@ sudo apt-get install -y python3 python3-pip
 
 sudo apt-get remove python-configparser
 ```
+## [Bonus] Add docker-compose :
+
 5. Install Docker Compose
 ```
 sudo pip3 install docker-compose

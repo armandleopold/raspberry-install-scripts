@@ -53,3 +53,38 @@ sudo apt-get remove python-configparser
 sudo pip3 install docker-compose
 ```
 Boom! 🔥 It's done!
+
+
+## [Bonus] Edit Edge Router Config : 
+
+```
+configure
+
+delete port-forward rule 3
+delete port-forward rule 4
+delete port-forward rule 5
+
+commit ; save
+
+configure
+
+set port-forward rule 3 description minecraft
+set port-forward rule 3 forward-to address 192.168.2.39
+set port-forward rule 3 forward-to port 25565
+set port-forward rule 3 original-port 25565
+set port-forward rule 3 protocol tcp
+
+commit ; save
+exit
+
+configure
+
+set port-forward rule 4 description tomcat
+set port-forward rule 4 forward-to address 192.168.2.39
+set port-forward rule 4 forward-to port 32050
+set port-forward rule 4 original-port 32050
+set port-forward rule 4 protocol tcp
+
+commit ; save
+exit
+```

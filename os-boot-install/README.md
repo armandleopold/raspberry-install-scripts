@@ -213,7 +213,7 @@ Change the password for the **pi** user
 
 ```
 # Clone de l'utilitaire rpi
-sudo apt-get update && apt-get install -y git
+sudo apt-get update && sudo apt-get install -y git
 git clone https://github.com/billw2/rpi-clone.git
 cd rpi-clone
 sudo cp rpi-clone rpi-clone-setup /usr/local/sbin

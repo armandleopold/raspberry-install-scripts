@@ -206,3 +206,20 @@ Change the password for the **pi** user
 ## (Bonus) External storage configuration :
 
 > from https://www.raspberrypi.org/documentation/configuration/external-storage.md
+
+## (Bonus) Copying Partitions/Files from SD Card to USB External Storage :
+
+> from https://www.framboise314.fr/dupliquez-la-carte-sd-de-votre-raspberry-pi-avec-rpi-clone/
+
+```
+# Clone de l'utilitaire rpi
+git clone https://github.com/billw2/rpi-clone.git
+cd rpi-clone
+sudo cp rpi-clone rpi-clone-setup /usr/local/sbin
+# verif
+echo $PATH
+# verif que le storage est bien reconnu
+sudo lsblk -o UUID,NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,MODEL
+# Lancement copie de la carte SD vers sda
+sudo rpi-clone sda 
+```

@@ -88,3 +88,20 @@ set port-forward rule 4 protocol tcp
 commit ; save
 exit
 ```
+
+## (Bonus) Add a valid SSL certificate for EdgeRouter UI : 
+> from https://www.stevejenkins.com/blog/2015/10/install-an-ssl-certificate-on-a-ubiquiti-edgemax-edgerouter/
+
+Get cert from your Cert provider (me from traefik with acme challenge to Let's Encrypt Authority)
+```
+# Copy cert
+scp armandleopold-fr-chain.pem aleopold@ubnt:/home/aleopold
+# Connect to router
+ssh aleopold@ubnt
+# Copy cert
+sudo cp  armandleopold-fr-chain.pem /etc/lighttpd/server.pem
+# Stop http server
+sudo kill -SIGINT $(cat /var/run/lighttpd.pid)
+# Start http server
+sudo  /usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf
+```

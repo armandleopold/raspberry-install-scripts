@@ -21,7 +21,7 @@ Server install command:
 
 ```bash
 export INSTALL_K3S_VERSION="v1.18.9+k3s1"
-export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server --datastore-endpoint=etcd"
+export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server --datastore-endpoint=etcd --kubelet-arg=[--system-reserved=[cpu=3000m][,][memory=3000Mi]]"
 curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```

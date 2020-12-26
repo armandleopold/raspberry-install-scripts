@@ -25,7 +25,7 @@ export INSTALL_K3S_VERSION="v1.18.9+k3s1"
 export INSTALL_K3S_EXEC="server --cluster-init --disable=traefik --disable=local-storage --disable=metrics-server --datastore-endpoint=etcd --kubelet-arg=system-reserved=cpu=1500m,memory=1500Mi --kubelet-arg=kube-reserved=cpu=1500m,memory=1500Mi"
 curl -sfL https://get.k3s.io | sh -s -
 sudo cat /var/lib/rancher/k3s/server/node-token
-restart k3s
+systemctl restart k3s
 ```
 
 Then SSH to you worker nodes pi and run :
@@ -36,7 +36,7 @@ export INSTALL_K3S_VERSION="v1.18.9+k3s1"
 export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
 curl -sfL https://get.k3s.io | sh -s -
-restart k3s-agent
+systemctl restart k3s-agent
 ```
 
 Check nodes : 

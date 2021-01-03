@@ -19,7 +19,7 @@ Export k3s kubeconfig file as ENV var to override helm default get config path :
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 ```
 
-# Install Local-path-provisioner (OpenEBS) : 
+# Install Cluster Storage Manager (OpenEBS) : 
 
 > from https://artifacthub.io/packages/helm/openebs/openebs
 

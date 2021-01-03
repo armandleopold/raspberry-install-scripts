@@ -54,20 +54,3 @@ sudo kubectl get node -o wide
 ```bash
 sudo ionice -c2 -n0 -p `pgrep k3s`
 ```
-
-# Install Local-path-provisioner (OpenEBS) : 
-
-```
-sudo cp openebs-operator-arm-dev.yaml /var/lib/rancher/k3s/server/manifests/
-
-sudo kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-sudo kubectl get storageclass
-```
-
-## [Bonus] Add custom storage class (SSD/HDD/NVME external drives) :
-
-> from https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass
-
-```bash
-kubectl apply -f local-nvme-hostpath-sc.yaml
-```

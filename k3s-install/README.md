@@ -55,12 +55,6 @@ sudo kubectl get node -o wide
 sudo ionice -c2 -n0 -p `pgrep k3s`
 ```
 
-## Set user rights on master node : 
-
-```bash
-sudo chown -R pi:pi /etc/rancher/
-```
-
 # Install Local-path-provisioner (OpenEBS) : 
 
 ```

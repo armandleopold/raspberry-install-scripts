@@ -89,7 +89,7 @@ commit ; save
 exit
 ```
 
-## (Bonus) Add a valid SSL certificate for EdgeRouter UI : 
+## [Bonus] Add a valid SSL certificate for EdgeRouter UI : 
 > from https://www.stevejenkins.com/blog/2015/10/install-an-ssl-certificate-on-a-ubiquiti-edgemax-edgerouter/
 
 Get cert from your Cert provider (me from traefik with acme challenge to Let's Encrypt Authority)

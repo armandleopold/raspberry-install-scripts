@@ -34,8 +34,25 @@ helm install --namespace openebs openebs/openebs
 
 > from https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass
 
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-nvme-local
+  annotations:
+    openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      - name: StorageType
+        value: hostpath
+      - name: BasePath
+        value: /mnt/nvme
+provisioner: openebs.io/local
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+```
+
 ```bash
-kubectl apply -f local-nvme-hostpath-sc.yaml
+kubectl apply -f local-hostpath-sc.yaml
 ```
 
 # Install Traefik :

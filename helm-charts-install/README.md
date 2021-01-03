@@ -56,6 +56,17 @@ volumeBindingMode: WaitForFirstConsumer
 kubectl apply -f local-nvme-hostpath-sc.yaml
 ```
 
+# Install Certificate Manager :
+
+> from https://artifacthub.io/packages/helm/jetstack/cert-manager
+
+```bash
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0-alpha.0/cert-manager.crds.yaml
+
+helm repo add jetstack https://charts.jetstack.io
+helm install --name my-release --namespace cert-manager jetstack/cert-manager
+```
+
 # Install Traefik :
 ```
 kubectl create namespace traefik

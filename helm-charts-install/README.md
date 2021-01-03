@@ -19,6 +19,25 @@ Export k3s kubeconfig file as ENV var to override helm default get config path :
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_aliases
 ```
 
+# Install Local-path-provisioner (OpenEBS) : 
+
+> from https://artifacthub.io/packages/helm/openebs/openebs
+
+```
+helm repo add openebs https://openebs.github.io/charts
+kubectl create namespace openebs
+helm install --namespace openebs openebs/openebs
+
+```
+
+## [Bonus] Add custom storage class (SSD/HDD/NVME external drives) :
+
+> from https://docs.openebs.io/docs/next/uglocalpv-hostpath.html#create-storageclass
+
+```bash
+kubectl apply -f local-nvme-hostpath-sc.yaml
+```
+
 # Install Traefik :
 ```
 kubectl create namespace traefik

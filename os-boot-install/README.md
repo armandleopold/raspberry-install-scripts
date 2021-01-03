@@ -227,11 +227,4 @@ sudo rpi-clone sda
 
 ## (Bonus) Boot From USB External Storage : 
 
-> from https://thepi.io/how-to-boot-your-raspberry-pi-from-a-usb-mass-storage-device/
-
-```
-sudo apt-get update
-sudo apt-get upgrade
-
-echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt
-```
+> https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/msd.md

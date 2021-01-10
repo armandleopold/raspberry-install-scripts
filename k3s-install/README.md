@@ -60,3 +60,11 @@ sudo kubectl get node -o wide
 ```bash
 sudo ionice -c2 -n0 -p `pgrep k3s`
 ```
+### Clean Nodes : 
+
+```bash
+# Drop exited containers
+sudo k3s crictl ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo k3s crictl rm
+# Drop unused images
+sudo k3s crictl rmi --prune
+```

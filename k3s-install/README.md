@@ -72,4 +72,4 @@ sudo k3s crictl rmi --prune
 
 ```bash
 journalctl -u k3s -f
-``
+```

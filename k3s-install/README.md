@@ -68,3 +68,8 @@ sudo k3s crictl ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo k3s crictl rm
 # Drop unused images
 sudo k3s crictl rmi --prune
 ```
+## Check k3s logs :
+
+```bash
+journalctl -u k3s -f
+``

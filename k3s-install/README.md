@@ -34,6 +34,18 @@ sudo cat /var/lib/rancher/k3s/server/node-token
 systemctl restart k3s
 ```
 
+[Bonus] : Facultative arguments if you have read/write latency & I/O problems on disk
+```bash
+  --kubelet-arg=system-reserved=cpu=1000m,memory=500Mi \
+  --kubelet-arg=kube-reserved=cpu=1000m,memory=500Mi \
+  --kube-controller-manager-arg=leader-elect-lease-duration=240s \
+  --kube-controller-manager-arg=leader-elect-renew-deadline=60s \
+  --kube-scheduler-arg=leader-elect-lease-duration=240s \
+  --kube-scheduler-arg=leader-elect-renew-deadline=60s \
+  --kube-cloud-controller-manager-arg=leader-elect-lease-duration=240s \
+  --kube-cloud-controller-manager-arg=leader-elect-renew-deadline=60s"
+```
+
 Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash

@@ -21,7 +21,7 @@ SSH to your master node pi and run :
 
 ```bash
 /usr/local/bin/k3s-killall.sh
-export INSTALL_K3S_VERSION="v1.18.13+k3s1"
+export INSTALL_K3S_VERSION="v1.19.10+k3s1"
 export INSTALL_K3S_EXEC="server \
   --cluster-init \
   --disable=traefik \
@@ -50,7 +50,7 @@ Then SSH to you worker nodes pi and run :
 Agent install command:
 ```bash
 /usr/local/bin/k3s-killall.sh
-export INSTALL_K3S_VERSION="v1.18.13+k3s1"
+export INSTALL_K3S_VERSION="v1.19.10+k3s1"
 export K3S_TOKEN=""
 export K3S_URL="https://192.168.2.39:6443"
 curl -sfL https://get.k3s.io | sh -s -

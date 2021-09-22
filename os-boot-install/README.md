@@ -1,6 +1,8 @@
 # 1. Download and install Operating System
 > from https://www.raspberrypi.org/downloads/
 
+Download [https://downloads.raspberrypi.org/raspios_lite_arm64/images/](https://downloads.raspberrypi.org/raspios_lite_arm64/images/)
+
 1. Select Raspbian lite for arm64 architectures.
 2. Select SD Card
 3. Write

@@ -85,3 +85,13 @@ sudo k3s crictl rmi --prune
 ```bash
 journalctl -u k3s -f
 ```
+
+## Logs Centralization : 
+
+Thanks to [Promtail & Loki](https://grafana.com/docs/loki/latest/clients/promtail/) you can centralize logs from all over your pods in your cluster.
+
+Go to the Grafana Explore pannel an search for example to errors in logs with this query expression : 
+
+```
+{namespace =~ ".+"} |~ "error|Error|ERROR"
+```

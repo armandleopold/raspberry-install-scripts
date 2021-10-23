@@ -95,3 +95,14 @@ Go to the Grafana Explore pannel an search for example to errors in logs with th
 ```
 {namespace =~ ".+"} |~ "error|Error|ERROR"
 ```
+
+## Backup K3S Server folder : 
+
+```bash
+# Stoping k3s
+systemctl stop k3s
+# Create dump
+tar -czvf /mnt/sdcard/server-23-10-2021.tar.gz /var/lib/rancher/k3s/server/
+# Starting back
+systemctl start k3s
+```

@@ -106,3 +106,9 @@ tar -czvf /mnt/sdcard/server-23-10-2021.tar.gz /var/lib/rancher/k3s/server/
 # Starting back
 systemctl start k3s
 ```
+
+## Cleanup old replicasets : 
+
+```
+kubectl get rs -A -o wide | tail -n +2 | awk '{if ($3 + $4 + $5 == 0) print "kubectl delete rs -n "$1, $2 }' | sh
+```

@@ -55,7 +55,32 @@ sudo pip3 install docker-compose
 Boom! 🔥 It's done!
 
 
-## [Bonus] Edit Edge Router Config : 
+# Edge Router Config : 
+
+## Set custom webui port
+
+> from https://blog.laslabs.com/2013/04/change-webui-port-ubiquiti-edge-router-lite/
+
+```
+configure
+set service gui https-port 8443
+commit
+save;
+
+configure
+
+edit firewall name WAN_LOCAL rule 50
+set description "Inbound traffic to WEB GUI"
+set action  accept
+set log disable
+set protocol tcp_udp
+set destination port 8443
+
+commit ; save
+exit
+```
+
+## Add custom port forwarding rules
 
 ```
 configure
@@ -90,6 +115,9 @@ exit
 ```
 
 ## [Bonus] Add a valid SSL certificate for EdgeRouter UI : 
+
+### Manually
+
 > from https://www.stevejenkins.com/blog/2015/10/install-an-ssl-certificate-on-a-ubiquiti-edgemax-edgerouter/
 
 Get cert from your Cert provider (me from traefik with acme challenge to Let's Encrypt Authority)
@@ -106,6 +134,6 @@ sudo kill -SIGINT $(cat /var/run/lighttpd.pid)
 sudo  /usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf
 ```
 
-## **automatic way**
+ ### Automatic renewal
 > from https://github.com/hungnguyenm/edgemax-acme
 

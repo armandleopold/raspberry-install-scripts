@@ -105,3 +105,7 @@ sudo kill -SIGINT $(cat /var/run/lighttpd.pid)
 # Start http server
 sudo  /usr/sbin/lighttpd -f /etc/lighttpd/lighttpd.conf
 ```
+
+## **automatic way**
+> from https://github.com/hungnguyenm/edgemax-acme
+

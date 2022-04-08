@@ -173,6 +173,31 @@ Copy the public key on the servers or remote machine :
 
 `ssh-copy-id pi@192.168.2.xx`
 
+### Configure JumpHost :
+
+As we seen before, because i use my EdgeRouter as a firewall, i have to configure it as a JumpHost to access my Pi's.
+Here is how it goes :
+
+1. Configure copy key to pi's
+
+With `/etc/hosts` at the `ubnt` bastion : 
+
+```
+192.168.2.39 pi1
+192.168.2.40 pi2
+192.168.2.41 pi3
+192.168.2.42 pi4
+```
+
+I copy ssh keys :
+
+* `ssh-copy-id -o ProxyJump=aleopold@ubnt pi@pi1`
+* `ssh-copy-id -o ProxyJump=aleopold@ubnt pi@pi2`
+* `ssh-copy-id -o ProxyJump=aleopold@ubnt pi@pi3`
+* `ssh-copy-id -o ProxyJump=aleopold@ubnt pi@pi4`
+
+And now i can do `ssh -J aleopold@ubnt pi@pi1` to connect directly to my pi's through my Bastion.
+
 ## Protect : 
 > from https://www.linuxnorth.org/five_minute_firewall/
 

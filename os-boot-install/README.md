@@ -162,6 +162,18 @@ I use my edge router as a Firewall to monitor in & out bound traffic and setup f
 
 It's is impossible from the outside to reach my machines with the ssh port.
 
+## Silence EdgeOs Welcome SSH Message
+
+1. Login in to edgerouter : `ssh aleopold@ubnt`
+2. Start edit config : `configure`
+3. Set New Welcome Message to empty string : `set system login banner pre-login ""`
+4. commit config : 
+```
+commit
+save
+exit
+```
+
 ## Connect with SSH keys : 
 > from https://www.linode.com/docs/security/authentication/use-public-key-authentication-with-ssh/
 

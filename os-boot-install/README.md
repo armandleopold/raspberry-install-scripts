@@ -210,6 +210,12 @@ I copy ssh keys :
 
 And now i can do `ssh -J aleopold@ubnt pi@pi1` to connect directly to my pi's through my Bastion.
 
+### Copy files through bastion using jumphost : 
+
+If i want to copy a file from my computer to a node through my bastion , i will use this command : 
+
+`scp -o 'ProxyJump=aleopold@ubnt' pvc-572cb2ab-237d-499b-a9a6-46584e218236_20-04-2023.tar.gz pi@pi2:/home/pi`
+
 ## Protect : 
 > from https://www.linuxnorth.org/five_minute_firewall/
 
